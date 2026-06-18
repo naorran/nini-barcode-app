@@ -2,7 +2,9 @@ import { useEffect, useState } from "react";
 import axios from "axios";
 import { Html5Qrcode } from "html5-qrcode";
 
-const API_BASE = `http://${window.location.hostname}:3001`;
+const API_BASE =
+  import.meta.env.VITE_API_BASE_URL ||
+  (import.meta.env.DEV ? `http://${window.location.hostname}:3001` : "");
 
 export default function App() {
   const [products, setProducts] = useState([]);
@@ -50,7 +52,7 @@ export default function App() {
       console.error(err);
       setScannerRunning(false);
       setMessage(
-        "ERROR - לא הצלחתי לפתוח מצלמה: " +
+        "ERROR - לא הצלחתי לפתוח מצלמה  : " +
         JSON.stringify(err, Object.getOwnPropertyNames(err))
       );
     }
