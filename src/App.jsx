@@ -45,7 +45,6 @@ export default function App() {
           setBarcode(decodedText);
           setMessage(`נמצא ברקוד: ${decodedText}. שומר...`);
 
-          await saveBarcode(decodedText);
         }
       );
     } catch (err) {
@@ -92,6 +91,7 @@ export default function App() {
 
       setBarcode(result);
       setMessage("נמצא ברקוד. בדוק שהמספר נכון ואז לחץ אישור ושמירה.");
+
     } catch (err) {
       console.error("Barcode scan error:", err);
       setMessage("לא הצלחתי לזהות ברקוד בתמונה. נסה צילום קרוב וברור יותר.");
