@@ -178,9 +178,6 @@ export default function App() {
         ) : (
           <p>בחר מוצר מהרשימה לפני צילום הברקוד</p>
         )}
-        
-          {message && <p style={{ fontWeight: "bold" }}>{message}</p>}
-        
 
         <button
           onClick={startScanner}
