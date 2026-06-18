@@ -91,12 +91,11 @@ export default function App() {
       const result = await scanner.scanFile(file, true);
 
       setBarcode(result);
-      setMessage(`נמצא ברקוד: ${result}. שומר...`);
-
-      await saveBarcode(result);
+      setMessage("נמצא ברקוד. בדוק שהמספר נכון ואז לחץ אישור ושמירה.");
     } catch (err) {
       console.error("Barcode scan error:", err);
       setMessage("לא הצלחתי לזהות ברקוד בתמונה. נסה צילום קרוב וברור יותר.");
+
       setMessage(
         "ERROR: " +
         JSON.stringify(err, Object.getOwnPropertyNames(err))
@@ -165,6 +164,7 @@ export default function App() {
               >
                 {product.name}
               </button>
+              
             ))
           )}
         </div>
@@ -189,7 +189,34 @@ export default function App() {
 
         <div id="barcode-reader" style={{ marginTop: 16 }} />
 
-        {barcode && <p>ברקוד: {barcode}</p>}
+        {barcode && (
+  <>
+            <input
+              value={barcode}
+              onChange={(e) => setBarcode(e.target.value)}
+              placeholder="ברקוד"
+              style={{
+                width: "100%",
+                padding: 12,
+                fontSize: 20,
+                marginTop: 12,
+                boxSizing: "border-box"
+              }}
+            />
+
+            <button
+              onClick={() => saveBarcode(barcode)}
+              disabled={saving}
+              style={{
+                ...buttonStyle,
+                marginTop: 12
+              }}
+            >
+              אישור ושמירה
+            </button>
+          </>
+        )}
+
         {saving && <p>שומר...</p>}
         {message && <p style={{ fontWeight: "bold" }}>{message}</p>}
       </div>
