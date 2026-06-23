@@ -15,6 +15,7 @@ export default function App() {
   const [loading, setLoading] = useState(true);
   const [saving, setSaving] = useState(false);
   const [scannerRunning, setScannerRunning] = useState(false);
+  const [search, setSearch] = useState("");
 
   useEffect(() => {
     loadProducts();
@@ -121,6 +122,7 @@ export default function App() {
       setProducts(prev =>
         prev.filter(p => p.rowNumber !== selectedProduct.rowNumber)
       );
+      
 
       setSelectedProduct(null);
       setBarcode("");
@@ -132,6 +134,10 @@ export default function App() {
     }
   }
 
+  const filteredProducts = products.filter(product =>
+    product.name.toLowerCase().includes(search.trim().toLowerCase())
+  );
+
   return (
     <div style={{ maxWidth: 600, margin: "0 auto", padding: 20, direction: "rtl", fontFamily: "Arial" }}>
       <h1>סריקת ברקודים</h1>
@@ -139,7 +145,21 @@ export default function App() {
       <button onClick={() => setShowMissing(!showMissing)} style={buttonStyle}>
         {showMissing ? "הסתר מוצרים בלי ברקוד" : "הצג מוצרים בלי ברקוד"}
       </button>
-
+      <input
+        value={search}
+        onChange={e => setSearch(e.target.value)}
+        placeholder="חיפוש מוצר"
+        style={{
+          width: "100%",
+          padding: "12px",
+          marginTop: "12px",
+          marginBottom: "12px",
+          border: "1px solid #ddd",
+          borderRadius: "10px",
+          fontSize: "16px",
+          boxSizing: "border-box"
+        }}
+/>
       {showMissing && (
         <div style={{ marginTop: 16, border: "1px solid #ddd", borderRadius: 12, padding: 12 }}>
           <h3>מוצרים בלי ברקוד: {products.length}</h3>
@@ -147,7 +167,7 @@ export default function App() {
           {loading ? (
             <p>טוען...</p>
           ) : (
-            products.map(product => (
+            filteredProducts.map(product => (
               <button
                 key={product.rowNumber}
                 onClick={() => {
