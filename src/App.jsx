@@ -208,7 +208,33 @@ export default function App() {
         </button>
 
         <div id="barcode-reader" style={{ marginTop: 16 }} />
+        <div style={{ marginTop: 16 }}>
+  <input
+    value={barcode}
+    onChange={e => setBarcode(e.target.value)}
+    placeholder="הכנס ברקוד ידנית"
+    inputMode="numeric"
+    style={{
+      width: "100%",
+      padding: 14,
+      fontSize: 18,
+      border: "1px solid #ddd",
+      borderRadius: 10,
+      boxSizing: "border-box"
+    }}
+  />
 
+  <button
+    onClick={() => saveBarcode(barcode)}
+    disabled={!selectedProduct || !barcode || saving}
+    style={{
+      ...buttonStyle,
+      marginTop: 10
+    }}
+  >
+    שמור ברקוד
+  </button>
+</div>
         {barcode && (
   <>
             <input
@@ -223,6 +249,7 @@ export default function App() {
                 boxSizing: "border-box"
               }}
             />
+
 
             <button
               onClick={() => saveBarcode(barcode)}
@@ -240,6 +267,7 @@ export default function App() {
         {saving && <p>שומר...</p>}
         {message && <p style={{ fontWeight: "bold" }}>{message}</p>}
       </div>
+      
     </div>
   );
 }
